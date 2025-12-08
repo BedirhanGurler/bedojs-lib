@@ -2,7 +2,7 @@
 **Ultra-light, ultra-fast state & async data management library for React Native.**  
 _Global Store • Selectors • Computed Values • Async Cache • Navigation Sync • Event Bus • Batch Updates_
 
-[🇹🇷 Türkçe Dokümantasyon](./README-TR.md)
+[🇹🇷 Türkçe Dokümantasyon](./Readme-TR.md)
 
 ---
 
