@@ -1,26 +1,80 @@
 {
   "name": "bedojs-lib",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsup src/index.ts --dts --format cjs,esm --out-dir dist",
-    "dev": "tsup src/index.ts --dts --format cjs,esm --out-dir dist --watch",
-    "clean": "rm -rf dist"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Ultra-light, ultra-fast state & async data management library for React Native (store, selectors, computed, async cache, navigation sync).",
+  "license": "MIT",
+  "author": "Bedirhan Gürler",
   "type": "commonjs",
+
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+
+  "files": [
+    "dist",
+    "Readme.md",
+    "Readme-TR.md",
+    "LICENSE"
+  ],
+
+  "sideEffects": false,
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BedirhanGurler/bedojs-lib.git"
+  },
+  "homepage": "https://github.com/BedirhanGurler/bedojs-lib#readme",
+  "bugs": {
+    "url": "https://github.com/BedirhanGurler/bedojs-lib/issues"
+  },
+
+  "keywords": [
+    "react-native",
+    "state-management",
+    "store",
+    "selectors",
+    "computed",
+    "async",
+    "cache",
+    "react-query",
+    "zustand",
+    "navigation"
+  ],
+
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsup src/index.ts --dts --format cjs,esm --out-dir dist --sourcemap",
+    "dev": "tsup src/index.ts --dts --format cjs,esm --out-dir dist --watch --sourcemap",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.72",
+    "@react-navigation/native": ">=6"
+  },
+
+  "peerDependenciesMeta": {
+    "@react-navigation/native": {
+      "optional": true
+    }
+  },
+
   "devDependencies": {
     "@types/react": "^19.2.7",
     "@types/react-native": "^0.72.8",
     "react": "^19.2.1",
     "react-native": "^0.82.1",
+    "@react-navigation/native": "^7.1.25",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "@react-navigation/native": "^7.1.25"
   }
 }
