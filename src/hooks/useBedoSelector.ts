@@ -3,11 +3,13 @@ import { bedoStore } from "../core/store";
 
 /**
  * Supports deep key paths like:
- * "filters"  => whole object
- * "filters.day" => nested read
+ * "filters"      => whole object
+ * "filters.day"  => nested read
  */
 function getValueByPath(obj: any, path: string) {
   if (!obj) return undefined;
+  if (!path) return obj;
+
   const parts = path.split(".");
   let current = obj;
 
@@ -29,17 +31,17 @@ export function useBedoSelector<T = any>(fullKey: string) {
   useEffect(() => {
     const [rootKey] = fullKey.split(".");
 
-    const sub = bedoStore.subscribe(rootKey, (newVal) => {
-      const newSelected = getValueByPath(newVal, fullKey.replace(`${rootKey}.`, ""));
+    const unsubscribe = bedoStore.subscribe(rootKey, (newVal) => {
+      const newSelected = getValueByPath(
+        newVal,
+        fullKey.replace(`${rootKey}.`, "")
+      );
 
-      // shallow compare for selector
-      if (newSelected !== selected) {
-        setSelected(newSelected);
-      }
+      setSelected((prev) => (prev !== newSelected ? newSelected : prev));
     });
 
-    return () => sub.unsubscribe();
-  }, [fullKey, selected]);
+    return () => unsubscribe.unsubscribe();
+  }, [fullKey]);
 
   return selected;
 }

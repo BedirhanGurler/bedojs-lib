@@ -1,6 +1,6 @@
 {
   "name": "bedojs-lib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ultra-light, ultra-fast state & async data management library for React Native (store, selectors, computed, async cache, navigation sync).",
   "license": "MIT",
   "author": "Bedirhan Gürler",
