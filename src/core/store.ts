@@ -15,14 +15,12 @@ class BedoStore implements Store {
   set(key: string, value: BedoValue): void {
     const prev = this.state.get(key);
 
-    if (prev !== value) {
-      this.state.set(key, value);
+    this.state.set(key, value);
 
-      if (this.batching) {
-        this.pendingKeys.add(key);
-      } else {
-        this.subscribers.notify(key, value);
-      }
+    if (this.batching) {
+      this.pendingKeys.add(key);
+    } else {
+      this.subscribers.notify(key, value);
     }
   }
 
