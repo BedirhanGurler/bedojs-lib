@@ -28,20 +28,28 @@ export function useBedoSelector<T = any>(fullKey: string) {
     return getValueByPath(stateRoot, fullKey.replace(`${rootKey}.`, ""));
   });
 
-  useEffect(() => {
-    const [rootKey] = fullKey.split(".");
+useEffect(() => {
+  const [rootKey] = fullKey.split(".");
 
-    const unsubscribe = bedoStore.subscribe(rootKey, (newVal) => {
-      const newSelected = getValueByPath(
-        newVal,
-        fullKey.replace(`${rootKey}.`, "")
-      );
+  const currentRoot = bedoStore.get(rootKey);
+  const initialSelected = getValueByPath(
+    currentRoot,
+    fullKey.replace(`${rootKey}.`, "")
+  );
+  setSelected(initialSelected);
 
-      setSelected((prev) => (prev !== newSelected ? newSelected : prev));
-    });
+  const sub = bedoStore.subscribe(rootKey, (newVal) => {
+    const newSelected = getValueByPath(
+      newVal,
+      fullKey.replace(`${rootKey}.`, "")
+    );
 
-    return () => unsubscribe.unsubscribe();
-  }, [fullKey]);
+    setSelected((prev) => (prev !== newSelected ? newSelected : prev));
+  });
+
+  return () => sub.unsubscribe();
+}, [fullKey]);
+
 
   return selected;
 }
